@@ -1,0 +1,33 @@
+{
+  "name": "afisiopop",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "node scripts/check-pendencias.mjs && node scripts/check-nomes.mjs && node scripts/check-motion.mjs && next build",
+    "build:launch": "node scripts/check-pendencias.mjs --launch && node scripts/check-nomes.mjs && node scripts/check-motion.mjs && next build",
+    "check:pendencias": "node scripts/check-pendencias.mjs",
+    "start": "next start",
+    "lint": "eslint",
+    "test": "vitest run",
+    "check:nomes": "node scripts/check-nomes.mjs",
+    "check:motion": "node scripts/check-motion.mjs"
+  },
+  "dependencies": {
+    "lucide-react": "^1.73.0",
+    "next": "16.4.6",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/turbopack": "4.3.3",
+    "@types/node": "^24.19.2",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.4.6",
+    "tailwindcss": "4.3.3",
+    "typescript": "^5",
+    "vitest": "^3.2.7"
+  }
+}

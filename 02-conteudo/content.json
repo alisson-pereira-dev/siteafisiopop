@@ -1,0 +1,637 @@
+{
+  "site": {
+    "nome": "A.FISIO POP",
+    "slogan": "Cuidar de você não precisa ser caro.",
+    "lang": "pt-BR",
+    "dominio": "",
+    "contato": {
+      "whatsapp": {
+        "numero": "5571988656153",
+        "mensagem_padrao": "Olá! Vim pelo site da A.FISIO POP e quero agendar meu horário.",
+        "validar": true,
+        "nota": "Número vindo de perfil pessoal; confirmar se é o WhatsApp oficial e de qual unidade. Se houver número por unidade, o CTA abre escolha de unidade."
+      },
+      "email": {
+        "valor": "",
+        "validar": true
+      }
+    },
+    "redes": {
+      "instagram": "https://www.instagram.com/afisiopop/",
+      "instagram_usuario": "@afisiopop"
+    },
+    "ctas": {
+      "principal": {
+        "texto": "Agendar meu horário no WhatsApp",
+        "destino": "whatsapp",
+        "tipo": "whatsapp"
+      },
+      "secundario": {
+        "texto": "Ver serviços por R$ 49,99",
+        "destino": "#servicos",
+        "tipo": "ancora"
+      }
+    },
+    "menu": [
+      {
+        "rotulo": "Serviços",
+        "destino": "#servicos"
+      },
+      {
+        "rotulo": "Como funciona",
+        "destino": "#como-funciona"
+      },
+      {
+        "rotulo": "Preço POP",
+        "destino": "#preco"
+      },
+      {
+        "rotulo": "Unidades",
+        "destino": "#unidades"
+      },
+      {
+        "rotulo": "Dúvidas",
+        "destino": "#faq"
+      }
+    ],
+    "faixa_topo": {
+      "texto": "Qualquer serviço por R$ 49,99 · Avaliação incluída",
+      "validar": true,
+      "nota": "Confirmar preço atual, exceções e avaliação incluída"
+    },
+    "logo": {
+      "src": "assets/logo-afisiopop.png",
+      "alt": "A.FISIOPOP Saúde & Estética"
+    }
+  },
+  "seo": {
+    "home": {
+      "titulo": "A.FISIO POP | Fisioterapia e Estética em Salvador e Lauro",
+      "descricao": "Fisioterapia e estética popular em Lauro de Freitas e Salvador. Qualquer serviço por R$ 49,99, com avaliação incluída. Agende pelo WhatsApp.",
+      "og_imagem": {
+        "src": "pendente",
+        "alt": "A.FISIO POP, fisioterapia e estética popular em Lauro de Freitas e Salvador"
+      },
+      "schema": {
+        "tipo": "LocalBusiness",
+        "campos": {
+          "name": "A.FISIO POP",
+          "description": "Clínica de fisioterapia e estética popular em Lauro de Freitas e Salvador (BA).",
+          "sameAs": [
+            "https://www.instagram.com/afisiopop/"
+          ],
+          "areaServed": [
+            "Lauro de Freitas",
+            "Salvador"
+          ],
+          "nota": "Endereço, telefone e horários só entram no schema depois de confirmados"
+        }
+      }
+    }
+  },
+  "secoes": {
+    "hero": {
+      "etiqueta": "Fisioterapia & Estética Popular",
+      "headline": "Cuidar de você não precisa ser **caro**.",
+      "subheadline": "Fisioterapia e estética popular em Lauro de Freitas e Salvador. Qualquer serviço por R$ 49,99. Você escolhe o cuidado, a gente cuida do resto.",
+      "cta": "@ctas.principal",
+      "cta_secundario": "@ctas.secundario",
+      "microcopy": "Sem pegadinha. Sem taxa escondida. Você chega, a gente avalia e indica o melhor para você.",
+      "selo": {
+        "valor": "R$ 49,99",
+        "rotulo": "Qualquer serviço",
+        "validar": true
+      },
+      "midia": {
+        "src": "pendente",
+        "alt": "Atendimento de fisioterapia na A.FISIO POP"
+      }
+    },
+    "prova_rapida": {
+      "itens": [
+        {
+          "valor": "Desde 2024",
+          "rotulo": "cuidando de você"
+        },
+        {
+          "valor": "+14 mil",
+          "rotulo": "seguidores no Instagram",
+          "fonte": "Briefing 15/11/2026",
+          "validar": true,
+          "nota": "Conferir o número no dia da publicação"
+        },
+        {
+          "valor": "3 unidades",
+          "rotulo": "em Lauro de Freitas e Salvador",
+          "validar": true,
+          "nota": "Briefing diz 3; Design System dizia 2"
+        },
+        {
+          "valor": "Avaliação incluída",
+          "rotulo": "antes de indicar o tratamento",
+          "validar": true
+        }
+      ]
+    },
+    "problema_solucao": {
+      "titulo": "Um problema, **uma solução**.",
+      "subtitulo": "Conte o que você sente. A gente indica o cuidado certo.",
+      "itens": [
+        {
+          "problema": "Dor nas costas",
+          "solucao": "Liberação Miofascial",
+          "icone": "activity",
+          "ancora": "#servicos"
+        },
+        {
+          "problema": "Barriga e pernas inchadas",
+          "solucao": "Drenagem Linfática",
+          "icone": "droplets",
+          "ancora": "#servicos"
+        },
+        {
+          "problema": "Cansaço e estresse",
+          "solucao": "Massagem Relaxante",
+          "icone": "moon",
+          "ancora": "#servicos"
+        },
+        {
+          "problema": "Gordura localizada",
+          "solucao": "Massagem Modeladora",
+          "icone": "ruler",
+          "ancora": "#servicos"
+        },
+        {
+          "problema": "Dor que não passa",
+          "solucao": "Avaliação + Fisioterapia",
+          "icone": "stethoscope",
+          "ancora": "#servicos"
+        }
+      ],
+      "texto_apoio": "Não sabe qual escolher? Vem que a gente avalia. Você conta o que está sentindo, a gente indica o tratamento certo para o seu momento.",
+      "cta": "@ctas.principal"
+    },
+    "servicos": {
+      "titulo": "Tudo que seu corpo precisa, em um só lugar. Por **R$ 49,99**.",
+      "subtitulo": "Toque no serviço para chamar a gente já com ele escolhido.",
+      "itens": [
+        {
+          "nome": "Liberação Miofascial",
+          "descricao": "Destrava, alivia a dor e devolve seu movimento. Ideal para quem treina, corre ou vive travado.",
+          "icone": "activity",
+          "imagem": {
+            "src": "pendente",
+            "alt": "Liberação miofascial sendo realizada"
+          },
+          "validar": false
+        },
+        {
+          "nome": "Drenagem Linfática",
+          "descricao": "Leveza imediata. Reduz inchaço, melhora a circulação e ajuda a eliminar toxinas.",
+          "icone": "droplets",
+          "imagem": {
+            "src": "pendente",
+            "alt": "Drenagem linfática sendo realizada"
+          },
+          "validar": true,
+          "nota": "Afirmação 'eliminar toxinas' aprovada pelo cliente; recomendada revisão da responsável técnica"
+        },
+        {
+          "nome": "Massagem Relaxante",
+          "descricao": "Desliga do mundo. Alivia tensão, estresse e cansaço acumulado.",
+          "icone": "moon",
+          "imagem": {
+            "src": "pendente",
+            "alt": "Massagem relaxante sendo realizada"
+          },
+          "validar": true,
+          "nota": "'por uma hora' removido: duração não confirmada"
+        },
+        {
+          "nome": "Massagem Modeladora",
+          "descricao": "Para quem quer definir, reduzir medidas e ativar a circulação.",
+          "icone": "ruler",
+          "imagem": {
+            "src": "pendente",
+            "alt": "Massagem modeladora sendo realizada"
+          },
+          "validar": true,
+          "nota": "Recomendada revisão da responsável técnica"
+        },
+        {
+          "nome": "Ventosaterapia",
+          "descricao": "Alívio profundo para tensão muscular e dor crônica. Uma aliada para quem convive com fibromialgia.",
+          "icone": "circle-dot",
+          "imagem": {
+            "src": "pendente",
+            "alt": "Ventosaterapia sendo realizada"
+          },
+          "validar": true,
+          "nota": "Recomendada revisão da responsável técnica"
+        },
+        {
+          "nome": "Limpeza de Pele",
+          "descricao": "Pele limpa, leve e renovada. Com extração e cuidado profissional.",
+          "icone": "sparkles",
+          "imagem": {
+            "src": "pendente",
+            "alt": "Limpeza de pele sendo realizada"
+          },
+          "validar": false
+        },
+        {
+          "nome": "Fisioterapia Ortopédica",
+          "descricao": "Recuperação segura após fratura, lesão ou cirurgia (com indicação). Fortalecimento gradual e mobilidade de volta.",
+          "icone": "bone",
+          "imagem": {
+            "src": "pendente",
+            "alt": "Fisioterapia ortopédica sendo realizada"
+          },
+          "validar": true,
+          "nota": "Confirmar que o preço único vale para este serviço"
+        }
+      ],
+      "link_servico_texto": "Chamar sobre este serviço",
+      "mensagem_servico": "Olá! Vim pelo site da A.FISIO POP e quero agendar {servico}."
+    },
+    "como_funciona": {
+      "titulo": "Simples do começo ao fim.",
+      "passos": [
+        {
+          "numero": 1,
+          "titulo": "Você agenda",
+          "descricao": "Chama no WhatsApp e escolhe o melhor dia e unidade."
+        },
+        {
+          "numero": 2,
+          "titulo": "A gente avalia",
+          "descricao": "Você conta o que sente, a gente entende e indica o tratamento ideal."
+        },
+        {
+          "numero": 3,
+          "titulo": "Você sai mais leve",
+          "descricao": "Atendimento na hora, sem enrolação, por R$ 49,99.",
+          "validar": true,
+          "nota": "'na hora' é promessa de prazo; confirmar"
+        }
+      ],
+      "cta": "@ctas.principal"
+    },
+    "preco_pop": {
+      "etiqueta": "Preço POP",
+      "titulo": "Preço único. **Sem letra miúda.**",
+      "texto": "Qualquer serviço. R$ 49,99. É isso mesmo. Acreditamos que autocuidado não é luxo, é necessidade. Por isso criamos um preço que cabe na sua rotina, e dá para voltar todo mês.",
+      "preco": {
+        "valor": "R$ 49,99",
+        "periodo": "por serviço",
+        "validar": true
+      },
+      "inclui": [
+        "Avaliação incluída",
+        "Qualquer serviço da tabela POP",
+        "Mesmo preço em todas as unidades",
+        "Sem taxa escondida"
+      ],
+      "cta": "@ctas.principal"
+    },
+    "para_quem": {
+      "titulo": "Feito para quem quer **cuidado de verdade**.",
+      "para_voce": [
+        "Sente dor no dia a dia",
+        "Vive inchada e com sensação de peso",
+        "Está cansada e estressada",
+        "Treina ou corre e precisa recuperar",
+        "Passa o dia todo em pé ou sentada",
+        "Quer se cuidar sem gastar uma fortuna"
+      ],
+      "nao_e_para_titulo": "Não é para quem procura milagre em uma sessão.",
+      "nao_e_para_texto": "É para quem quer cuidado de verdade, com constância e carinho."
+    },
+    "depoimentos": {
+      "titulo": "Quem cuida de si **volta**.",
+      "subtitulo": "O que as clientes comentam no nosso Instagram.",
+      "provisorio": true,
+      "nota_provisorio": "Comentários do Instagram sem autor identificado. Usados só para popular o site. Trocar por depoimentos com nome, cidade e autorização antes do lançamento.",
+      "itens": [
+        {
+          "citacao": "A melhor!!",
+          "autor": "Cliente da A.FISIO POP",
+          "contexto": "Comentário no Instagram",
+          "fonte": "Instagram @afisiopop",
+          "link": "https://www.instagram.com/afisiopop/",
+          "provisorio": true,
+          "validar": true
+        },
+        {
+          "citacao": "Dá pra incluir nas despesas fixas, impossível não ir todo mês.",
+          "autor": "Cliente da A.FISIO POP",
+          "contexto": "Comentário no Instagram",
+          "fonte": "Instagram @afisiopop",
+          "link": "https://www.instagram.com/afisiopop/",
+          "provisorio": true,
+          "validar": true
+        },
+        {
+          "citacao": "Obrigada por me ajudar a andar novamente.",
+          "autor": "Cliente da A.FISIO POP",
+          "contexto": "Comentário no Instagram",
+          "fonte": "Instagram @afisiopop",
+          "link": "https://www.instagram.com/afisiopop/",
+          "provisorio": true,
+          "validar": true
+        }
+      ]
+    },
+    "unidades": {
+      "titulo": "Escolha a unidade **mais perto de você**.",
+      "texto": "Escolha a unidade mais perto de você e agende pelo WhatsApp. Todas com o mesmo preço, o mesmo cuidado.",
+      "itens": [
+        {
+          "nome": "Lauro de Freitas",
+          "local": "Shopping Vida Nova",
+          "cidade": "Lauro de Freitas",
+          "uf": "BA",
+          "endereco": "Avenida Santo Amaro de Ipitanga, 464, Lauro de Freitas, BA, 42711790",
+          "horarios": [],
+          "mapa_url": "",
+          "validar": true,
+          "nota": "Endereço vindo de perfil pessoal, não confirmado como o do Shopping Vida Nova. O briefing cita também 'Shopping Empresarial Vida Nova'; confirmar se é um local ou dois."
+        },
+        {
+          "nome": "Salvador",
+          "local": "Shopping da Gente",
+          "cidade": "Salvador",
+          "uf": "BA",
+          "endereco": "",
+          "horarios": [],
+          "mapa_url": "",
+          "validar": true,
+          "nota": "Endereço e horários pendentes"
+        },
+        {
+          "nome": "Salvador",
+          "local": "Cajazeiras X",
+          "cidade": "Salvador",
+          "uf": "BA",
+          "endereco": "",
+          "horarios": [],
+          "mapa_url": "",
+          "validar": true,
+          "nota": "Endereço e horários pendentes"
+        }
+      ],
+      "cta": "@ctas.principal"
+    },
+    "faq": {
+      "titulo": "Dúvidas **comuns**.",
+      "perguntas": [
+        {
+          "pergunta": "Preciso saber qual serviço escolher antes de agendar?",
+          "resposta": "Não. Você agenda, a gente avalia e indica o melhor para você.",
+          "validar": false
+        },
+        {
+          "pergunta": "Qualquer serviço é mesmo R$ 49,99?",
+          "resposta": "Sim. Qualquer serviço da tabela POP, sem taxa escondida.",
+          "validar": true
+        },
+        {
+          "pergunta": "A avaliação é cobrada à parte?",
+          "resposta": "Não. Toda primeira visita inclui avaliação, e ela já está dentro do preço único. Você sai com um plano claro, sem surpresa.",
+          "validar": true
+        },
+        {
+          "pergunta": "A liberação miofascial dói?",
+          "resposta": "Pode incomodar, porque é um tratamento profundo. Mas a gente explica tudo e ajusta a intensidade para você.",
+          "validar": false
+        },
+        {
+          "pergunta": "Posso fazer drenagem se estou no pós-operatório?",
+          "resposta": "Sim, com indicação do seu médico ou profissional. Fala com a gente antes de agendar.",
+          "validar": false
+        },
+        {
+          "pergunta": "Posso voltar todo mês?",
+          "resposta": "Pode, e deve. Cuidar de você vira rotina leve, não evento raro. A gente te ajuda a manter a constância.",
+          "validar": false
+        },
+        {
+          "pergunta": "Como faço para agendar?",
+          "resposta": "Pelo botão do WhatsApp aqui do site ou pelo link da bio no Instagram @afisiopop.",
+          "validar": false
+        }
+      ]
+    },
+    "cta_final": {
+      "headline": "Seu corpo está pedindo **cuidado**.",
+      "subtexto": "Não espera a dor chegar no limite. Qualquer serviço por R$ 49,99, com avaliação incluída.",
+      "cta": "@ctas.principal"
+    },
+    "footer": {
+      "descricao_curta": "Fisioterapia e estética popular em Lauro de Freitas e Salvador. Cuidar de você não precisa ser caro.",
+      "colunas": [
+        {
+          "titulo": "Navegue",
+          "links": [
+            {
+              "rotulo": "Serviços",
+              "destino": "#servicos"
+            },
+            {
+              "rotulo": "Como funciona",
+              "destino": "#como-funciona"
+            },
+            {
+              "rotulo": "Preço POP",
+              "destino": "#preco"
+            },
+            {
+              "rotulo": "Dúvidas",
+              "destino": "#faq"
+            }
+          ]
+        },
+        {
+          "titulo": "Unidades",
+          "links": [
+            {
+              "rotulo": "Lauro de Freitas · Shopping Vida Nova",
+              "destino": "#unidades"
+            },
+            {
+              "rotulo": "Salvador · Shopping da Gente",
+              "destino": "#unidades"
+            },
+            {
+              "rotulo": "Salvador · Cajazeiras X",
+              "destino": "#unidades"
+            }
+          ]
+        },
+        {
+          "titulo": "Fale com a gente",
+          "links": [
+            {
+              "rotulo": "WhatsApp",
+              "destino": "whatsapp"
+            },
+            {
+              "rotulo": "@afisiopop",
+              "destino": "https://www.instagram.com/afisiopop/"
+            }
+          ]
+        }
+      ],
+      "registro_profissional": {
+        "texto": "",
+        "validar": true,
+        "nota": "Nome da responsável técnica, CREFITO e CNPJ. Renderizar somente quando preenchido; bloqueia o lançamento."
+      },
+      "links_legais": [
+        {
+          "rotulo": "Política de Privacidade",
+          "destino": "/privacidade"
+        },
+        {
+          "rotulo": "Termos de Uso",
+          "destino": "/termos"
+        }
+      ],
+      "copyright": "© 2026 A.FISIO POP. Todos os direitos reservados."
+    }
+  },
+  "microcopy": {
+    "cookies": {
+      "texto": "Usamos cookies para medir o uso do site e melhorar sua experiência. Você escolhe o que aceitar.",
+      "aceitar": "Aceitar",
+      "recusar": "Recusar",
+      "preferencias": "Preferências",
+      "link": "/privacidade"
+    },
+    "pagina_404": {
+      "titulo": "Essa página não foi encontrada.",
+      "texto": "Mas o cuidado que você procura está aqui. Volte para o início ou chame a gente no WhatsApp.",
+      "cta": {
+        "texto": "Voltar ao início",
+        "destino": "/"
+      }
+    },
+    "acessibilidade": {
+      "pular_para_conteudo": "Pular para o conteúdo",
+      "abrir_menu": "Abrir menu",
+      "fechar_menu": "Fechar menu",
+      "abrir_whatsapp": "Falar com a gente no WhatsApp",
+      "voltar_ao_topo": "Voltar ao topo"
+    }
+  },
+  "meta": {
+    "gerado_em": "2026-11-16",
+    "versao": "1",
+    "pendencias_validar": [
+      {
+        "caminho": "site.contato.whatsapp",
+        "motivo": "Número vindo de perfil pessoal; confirmar se é o WhatsApp oficial e de qual unidade. Se houver número por unidade, o CTA abre escolha de unidade."
+      },
+      {
+        "caminho": "site.contato.email",
+        "motivo": "confirmar com a clínica"
+      },
+      {
+        "caminho": "site.faixa_topo",
+        "motivo": "Confirmar preço atual, exceções e avaliação incluída"
+      },
+      {
+        "caminho": "secoes.hero.selo",
+        "motivo": "confirmar com a clínica"
+      },
+      {
+        "caminho": "secoes.prova_rapida.itens[1]",
+        "motivo": "Conferir o número no dia da publicação"
+      },
+      {
+        "caminho": "secoes.prova_rapida.itens[2]",
+        "motivo": "Briefing diz 3; Design System dizia 2"
+      },
+      {
+        "caminho": "secoes.prova_rapida.itens[3]",
+        "motivo": "confirmar com a clínica"
+      },
+      {
+        "caminho": "secoes.servicos.itens[1]",
+        "motivo": "Afirmação 'eliminar toxinas' aprovada pelo cliente; recomendada revisão da responsável técnica"
+      },
+      {
+        "caminho": "secoes.servicos.itens[2]",
+        "motivo": "'por uma hora' removido: duração não confirmada"
+      },
+      {
+        "caminho": "secoes.servicos.itens[3]",
+        "motivo": "Recomendada revisão da responsável técnica"
+      },
+      {
+        "caminho": "secoes.servicos.itens[4]",
+        "motivo": "Recomendada revisão da responsável técnica"
+      },
+      {
+        "caminho": "secoes.servicos.itens[6]",
+        "motivo": "Confirmar que o preço único vale para este serviço"
+      },
+      {
+        "caminho": "secoes.como_funciona.passos[2]",
+        "motivo": "'na hora' é promessa de prazo; confirmar"
+      },
+      {
+        "caminho": "secoes.preco_pop.preco",
+        "motivo": "confirmar com a clínica"
+      },
+      {
+        "caminho": "secoes.depoimentos.itens[0]",
+        "motivo": "confirmar com a clínica"
+      },
+      {
+        "caminho": "secoes.depoimentos.itens[1]",
+        "motivo": "confirmar com a clínica"
+      },
+      {
+        "caminho": "secoes.depoimentos.itens[2]",
+        "motivo": "confirmar com a clínica"
+      },
+      {
+        "caminho": "secoes.unidades.itens[0]",
+        "motivo": "Endereço vindo de perfil pessoal, não confirmado como o do Shopping Vida Nova. O briefing cita também 'Shopping Empresarial Vida Nova'; confirmar se é um local ou dois."
+      },
+      {
+        "caminho": "secoes.unidades.itens[1]",
+        "motivo": "Endereço e horários pendentes"
+      },
+      {
+        "caminho": "secoes.unidades.itens[2]",
+        "motivo": "Endereço e horários pendentes"
+      },
+      {
+        "caminho": "secoes.faq.perguntas[1]",
+        "motivo": "confirmar com a clínica"
+      },
+      {
+        "caminho": "secoes.faq.perguntas[2]",
+        "motivo": "confirmar com a clínica"
+      },
+      {
+        "caminho": "secoes.footer.registro_profissional",
+        "motivo": "Nome da responsável técnica, CREFITO e CNPJ. Renderizar somente quando preenchido; bloqueia o lançamento."
+      },
+      {
+        "caminho": "secoes.depoimentos",
+        "motivo": "Depoimentos provisórios (comentários do Instagram sem autor). Substituir por 3-5 com nome, cidade e autorização."
+      },
+      {
+        "caminho": "secoes.servicos",
+        "motivo": "Confirmar tabela POP final. Auriculoterapia, Massagem Abdominal e TENS/Eletroterapia aparecem em fontes do cliente mas ficaram de fora até confirmação."
+      },
+      {
+        "caminho": "site.logo",
+        "motivo": "Logo recebido em PNG transparente; solicitar SVG para o build final."
+      }
+    ]
+  }
+}

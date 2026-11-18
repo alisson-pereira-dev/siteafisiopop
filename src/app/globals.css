@@ -1,0 +1,284 @@
+/*
+ * Estilos globais · A.FISIO POP
+ * Tokens: styles/design-tokens.css (gerado; não editar à mão)
+ */
+@import "tailwindcss" source("../");
+@import "../../styles/design-tokens.css";
+@config "../../tailwind.config.ts";
+
+/*
+ * Liga os tokens de fonte às fontes self-hosted do next/font.
+ * Os tokens trazem 'Sora', 'Instrument Serif' e 'Inter' só por nome. As variáveis do
+ * next/font (--font-sora etc.) trazem a fonte self-hosted + o fallback com métricas
+ * ajustadas (evita CLS no swap). Os nomes dos tokens (--font-title/-serif/-body) não mudam.
+ */
+:root {
+  --font-title: var(--font-sora), system-ui, sans-serif;
+  --font-serif: var(--font-instrument-serif), Georgia, serif;
+  --font-body: var(--font-inter), system-ui, sans-serif;
+}
+
+/*
+ * Variáveis do app (T2.1). Não vão em design-tokens.css (gerado; não se edita).
+ * --barra-cta-altura é escrita pelo CtaObservador (ResizeObserver); 0 onde a barra não existe.
+ */
+:root {
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --barra-cta-altura: 0px;
+  --scale-hover: 1.02;
+  --scale-press: 0.98;
+  --scale-float-entrada: 0.8;
+  --scale-pulso: 1.4;
+  --opacidade-pulso: 0.5;
+  --altura-stage: max(40rem, calc(100svh - var(--header-height))); /* stage do S03 (wireframe: 100vh, mínimo 40rem) */
+  --topo-sticky: calc(var(--header-height) + var(--space-6)); /* título sticky de como-funciona e faq (≥1024) */
+  --pilula-largura: 64rem; /* header rolado: largura máxima da pílula (a referência usa 56rem; aqui cabem 5 links + CTA) */
+  --pilula-vidro: color-mix(in srgb, var(--color-surface) 45%, transparent); /* vidro CLARO (glassmorphism): branco translúcido + desfoque; texto escuro */
+  --pilula-borda: color-mix(in srgb, var(--color-surface) 80%, transparent); /* fio de luz na borda do vidro */
+  --logo-escala-rolado: 0.75;
+  --gaveta-largura: 32rem; /* menu lateral */
+  --tamanho-float: 56px; /* botão flutuante do WhatsApp (docs/design-system.md: 56px, acima do alvo de toque) */
+  /* Alturas que dependem da viewport pequena (svh: a barra do navegador muda de altura ao rolar; nada usa 100vh). */
+  --altura-hero-midia: calc(100svh - var(--header-height) - var(--space-7));
+}
+
+/*
+ * Âncoras e rolagem (jornada-e-motion.md §3.5).
+ * - Âncora nunca fica sob o header sticky; no mobile também não fica sob a barra inferior (WCAG 2.4.11).
+ * - Rolagem suave SÓ com mouse (hover + pointer fino) e sem reduced-motion; no toque a âncora salta direto.
+ * - Sem scroll-snap, sem listener de scroll/wheel.
+ */
+html {
+  scroll-padding-top: calc(var(--header-height) + var(--space-4));
+}
+@media (max-width: 767px) {
+  html {
+    scroll-padding-bottom: var(--barra-cta-altura);
+  }
+}
+@media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/*
+ * ===== Receitas de motion (jornada-e-motion.md §3.4) =====
+ * Só `[data-anim]` é seletor. Só transform/opacity (visibility só alterna o que já está escondido,
+ * para sair da ordem de Tab). Durações e curvas só dos tokens. Em reduced-motion os tokens de duração
+ * caem para ~0 e `--reveal-distance` vira 0: o estado final é instantâneo.
+ * Estados de `data-estado` e níveis N0–N3: ver docs/convencao-de-nomes.md §3.
+ */
+
+/* reveal / stagger-item (N1): estado inicial oculto SÓ depois que MotionInit põe data-motion="on",
+   e nunca para o que já está na tela (MotionInit marca `visto` antes). Sem JS tudo visível. */
+[data-motion="on"] [data-anim~="reveal"]:not([data-estado="visto"]),
+[data-motion="on"] [data-anim~="stagger-item"]:not([data-estado="visto"]) {
+  opacity: 0;
+  transform: translateY(var(--reveal-distance));
+}
+/* A transição vive no estado de destino (`visto`): ao esconder não há animação. Mobile = dur-base, sem stagger. */
+[data-motion="on"] [data-anim~="reveal"][data-estado="visto"],
+[data-motion="on"] [data-anim~="stagger-item"][data-estado="visto"] {
+  transition:
+    opacity var(--dur-base) var(--ease-out),
+    transform var(--dur-base) var(--ease-out);
+}
+/* --stagger-i = posição do item entre os irmãos, com teto de 3 passos (180 ms). Por CSS, não por JS (evita o aviso de hidratação). */
+[data-anim~="stagger-item"]:nth-child(2) {
+  --stagger-i: 1;
+}
+[data-anim~="stagger-item"]:nth-child(3) {
+  --stagger-i: 2;
+}
+[data-anim~="stagger-item"]:nth-child(n + 4) {
+  --stagger-i: 3;
+}
+@media (min-width: 768px) {
+  [data-motion="on"] [data-anim~="reveal"][data-estado="visto"],
+  [data-motion="on"] [data-anim~="stagger-item"][data-estado="visto"] {
+    transition-duration: var(--dur-slow);
+  }
+  /* --stagger-i = índice do item, com teto de 3 passos, escrito pelo componente. */
+  [data-motion="on"] [data-anim~="stagger-item"][data-estado="visto"] {
+    transition-delay: calc(var(--stagger-step) * var(--stagger-i, 0));
+  }
+}
+
+/* header-pilula, header-logo, header-link, header-menu, painel e painel-fundo: ver src/app/header.css (exceção documentada do header). */
+
+/* barra-cta (N1, só <768 porque a barra é md:hidden): sem JS = visível (estado `pendente` do HTML).
+   Com JS (data-js) nasce `pendente` = escondida, sem transição, até o 1º callback do observer (≈1 quadro).
+   O watchdog (data-js-falhou) devolve a barra. */
+html[data-js]:not([data-js-falhou]) [data-anim~="barra-cta"][data-estado="pendente"] {
+  opacity: 0;
+  transform: translateY(100%);
+  visibility: hidden;
+  transition: none;
+}
+[data-anim~="barra-cta"][data-estado="visivel"] {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity var(--dur-base) var(--ease-out),
+    transform var(--dur-base) var(--ease-out);
+}
+[data-anim~="barra-cta"][data-estado="oculta"] {
+  opacity: 0;
+  transform: translateY(100%);
+  pointer-events: none;
+  transition:
+    opacity var(--dur-fast) var(--ease-in),
+    transform var(--dur-fast) var(--ease-in);
+}
+
+/* float (N1, só ≥768): entra com scale + opacity; sai em dur-fast. Mesma lógica de pendente/falha. */
+html[data-js]:not([data-js-falhou]) [data-anim~="float"][data-estado="pendente"] {
+  opacity: 0;
+  transform: scale(var(--scale-float-entrada));
+  visibility: hidden;
+  transition: none;
+}
+[data-anim~="float"][data-estado="visivel"] {
+  opacity: 1;
+  transform: scale(1);
+  transition:
+    opacity var(--dur-base) var(--ease-out),
+    transform var(--dur-base) var(--ease-out);
+}
+[data-anim~="float"][data-estado="oculta"] {
+  opacity: 0;
+  transform: scale(var(--scale-float-entrada));
+  pointer-events: none;
+  transition:
+    opacity var(--dur-fast) var(--ease-in),
+    transform var(--dur-fast) var(--ease-in);
+}
+
+/* Falha segura (M9): se o JS não ficou pronto (ou lançou erro), barra e flutuante aparecem, qualquer que
+   seja o estado deixado no DOM, e o palco volta à grade estática (regra do palco abaixo). */
+html[data-js-falhou] [data-anim~="barra-cta"],
+html[data-js-falhou] [data-anim~="float"] {
+  opacity: 1;
+  transform: none;
+  visibility: visible;
+  pointer-events: auto;
+  transition: none;
+}
+
+/* float-pulso (N1, decoração): anel que pulsa 2 vezes na 1ª aparição do flutuante e depois fica estático.
+   CtaObservador põe data-estado="ativa" uma única vez (e nunca com o palco na tela: um destaque por tela). */
+[data-anim~="float-pulso"] {
+  opacity: 0;
+  transform: scale(1);
+  pointer-events: none;
+}
+[data-anim~="float-pulso"][data-estado="ativa"] {
+  animation: float-pulso var(--dur-slower) var(--ease-out) 2;
+}
+@keyframes float-pulso {
+  from {
+    opacity: var(--opacidade-pulso);
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(var(--scale-pulso));
+  }
+}
+
+/* botao (N1): hover só com ponteiro que passa o mouse; foco por teclado tem o mesmo equivalente;
+   toque: :active em dur-instant (feedback < 100 ms). Mobile = só foco e :active. */
+[data-anim~="botao"] {
+  transition: transform var(--dur-fast) var(--ease-standard);
+}
+@media (hover: hover) and (min-width: 768px) {
+  [data-anim~="botao"]:hover {
+    transform: scale(var(--scale-hover));
+  }
+}
+[data-anim~="botao"]:focus-visible {
+  transform: scale(var(--scale-hover));
+}
+[data-anim~="botao"]:active {
+  transform: scale(var(--scale-press));
+  transition-duration: var(--dur-instant);
+}
+@media (max-width: 767px) {
+  [data-anim~="botao"] {
+    transition-duration: var(--dur-instant);
+  }
+}
+
+/* Stage do S03 ("Um problema, uma solução"): receitas `stage-*` em src/app/stage.css (exceção documentada, como o header). */
+
+/* Reduced-motion = estado instantâneo (não "sem animação"): pulso e foco/active sem movimento. */
+@media (prefers-reduced-motion: reduce) {
+  [data-anim~="float-pulso"] {
+    display: none;
+  }
+  [data-anim~="botao"] {
+    transition: none;
+  }
+}
+
+/* card-realce (N1): camada (pseudo-elemento) com shadow-2 cuja `opacity` sobe. Hover só com mouse E o mesmo no
+   foco por teclado e no toque (:focus-within / :active do link). `box-shadow` não anima (M5): anima a opacidade. */
+[data-anim~="card-realce"] {
+  position: relative;
+}
+[data-anim~="card-realce"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: var(--shadow-2);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-fast) var(--ease-standard);
+}
+@media (hover: hover) {
+  [data-anim~="card-realce"]:hover::after {
+    opacity: 1;
+  }
+}
+[data-anim~="card-realce"]:focus-within::after,
+[data-anim~="card-realce"]:active::after {
+  opacity: 1;
+}
+
+/* accordion (N1): <details> nativo abre e fecha na hora (a altura NÃO anima). O ícone "+" gira 45° (vira "×") e a resposta
+   entra por `opacity` (keyframe). O estado vem de details[open]; sem JS funciona igual. */
+[data-anim~="accordion-icone"] {
+  transition: transform var(--dur-fast) var(--ease-standard);
+}
+details[open] [data-anim~="accordion-icone"] {
+  transform: rotate(45deg);
+}
+details[open] > [data-anim~="accordion-resposta"] {
+  animation: entrada-opacidade var(--dur-base) var(--ease-out);
+}
+
+/* mapa-embed (N1): o iframe do mapa só existe depois do toque e entra por `opacity`. */
+[data-anim~="mapa-embed"] {
+  animation: entrada-opacidade var(--dur-base) var(--ease-out);
+}
+@keyframes entrada-opacidade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Cartão claro dentro de seção escura (preço): o anel de foco volta a ser escuro (o `section-inverse` o deixa branco). */
+.section-inverse .section-clara :focus-visible {
+  outline-color: var(--color-focus-ring);
+}
+
+/* Destaque serifado sobre faixa escura: rosa claro (6,35:1) em vez do brand-pink (só decoração em fundo claro).
+   Vive aqui, sem camada, porque `.accent-serif` do design-tokens.css também é sem camada e vence os utilitários do Tailwind. */
+.section-inverse .accent-serif {
+  color: var(--color-on-inverse-primary);
+}

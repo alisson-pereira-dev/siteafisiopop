@@ -1,0 +1,88 @@
+/*
+ * Pilhas de seções: as seções de baixo sobrepõem a primeira ao rolar. (1) hero + como-funciona, com parallax leve do hero (`pilha-parallax`);
+ * (2) depoimentos + unidades (18/11/2026), sem parallax. Também: `desce` (cards que entram vindo de cima).
+ * Ficha: docs/sections/fichas/hero.md (revisão de 17/11/2026) · Componente: src/ui/UiPilha.tsx · Catálogo: docs/jornada-e-motion.md §3.4
+ *
+ * Nível N2 (permitido: `position: sticky` nativo, sem biblioteca, sem scrub de JS, sem listener de scroll). O hero (`pilha-base`) trava
+ * e as seções seguintes (`pilha-topo`) passam por cima. Parallax leve: o hero sobe devagar enquanto é coberto, por CSS scroll-driven
+ * (`animation-timeline: scroll(root)`, só transform); onde o navegador não suporta, fica só a sobreposição (degrada sem perder nada).
+ * Versões: desktop/tablet ≥768 = sobreposição + parallax; mobile <768 = fluxo normal (a barra inferior de WhatsApp decide pelo CTA visível,
+ * e um hero coberto confundiria a regra); reduced-motion e sem JS = fluxo normal (tudo liga só com html[data-motion="on"], que o MotionInit
+ * não põe em reduced-motion; o parallax também some).
+ * `--pilha-topo` vem do UiPilha (min(0, altura da tela − altura da base)); sem ele, `top: auto` e o sticky não faz nada.
+ * A primeira seção de cima ganha cantos de cima arredondados (o hero aparece atrás); todas as de cima ganham z-index (já têm bg-bg).
+ */
+@media (min-width: 768px) {
+  html[data-motion="on"] [data-anim~="pilha-base"] {
+    position: sticky;
+    top: var(--pilha-topo, auto);
+  }
+  html[data-motion="on"] [data-anim~="pilha-topo"] {
+    z-index: 1;
+  }
+  html[data-motion="on"] [data-anim~="pilha-base"] + [data-anim~="pilha-topo"] {
+    overflow: clip; /* clip (não hidden): não cria contêiner de rolagem, senão o view() dos cards de dentro mediria a seção em vez da tela */
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  }
+  @supports (animation-timeline: scroll()) {
+    html[data-motion="on"] [data-anim~="pilha-parallax"] {
+      animation: pilha-parallax linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 0 100vh;
+    }
+  }
+}
+/* Cards que entram vindo de CIMA (desce, N1): o mesmo reveal de uma vez só dos stagger-item (opacity + transform, dur-slow no desktop e dur-base no mobile,
+   escalonado), mas o estado inicial fica ACIMA do lugar final (3× a distância do reveal) em vez de abaixo, então o card desce suave até a posição.
+   Só vale com data-motion="on" (nunca esconde nada sem JS; reduced-motion = estado final instantâneo, pois --reveal-distance vira 0). */
+html[data-motion="on"] [data-anim~="desce"]:not([data-estado="visto"]) {
+  transform: translateY(calc(var(--reveal-distance) * -3));
+}
+
+/* desce, versão LIGADA À ROLAGEM (18/11/2026, "não houve animação via scroll"): onde o navegador suporta animações por rolagem (animation-timeline: view(),
+   Chromium 115+ / Safari 26), o card não espera um disparo: ele desce de CIMA acompanhando a rolagem (de 6rem acima, invisível, até o lugar, opaco) enquanto
+   entra na tela (de 0% a 70% da entrada). CSS puro, nenhum listener, só opacity + transform; vale só com data-motion="on" (reduced-motion e sem JS: nada
+   é escondido). Nos navegadores sem suporte continua o reveal de uma vez acima. */
+@supports (animation-timeline: view()) {
+  html[data-motion="on"] [data-anim~="desce"] {
+    animation: desce-rolagem linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 70%;
+    transition: none;
+  }
+}
+/* EM CADEIA (18/11/2026): com os 3 cards lado a lado (≥1024) todos entram na tela no mesmo ponto da rolagem; para descerem UM POR VEZ cada card ganha a sua
+   janela de rolagem, defasada da anterior: 1º entry 0–45%, 2º entry 27–72%, 3º entry 54–100%. Abaixo de 1024 os cards ficam empilhados (já entram um a um). */
+@media (min-width: 1024px) {
+  @supports (animation-timeline: view()) {
+    html[data-motion="on"] [data-anim~="desce"]:nth-child(1) {
+      animation-range: entry 0% entry 45%;
+    }
+    html[data-motion="on"] [data-anim~="desce"]:nth-child(2) {
+      animation-range: entry 27% entry 72%;
+    }
+    html[data-motion="on"] [data-anim~="desce"]:nth-child(3) {
+      animation-range: entry 54% entry 100%;
+    }
+  }
+}
+@keyframes desce-rolagem {
+  from {
+    opacity: 0;
+    transform: translateY(calc(var(--space-6) * -3));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* o hero sobe 20% da própria altura ao longo da 1ª tela de rolagem (≈ 0,2× a velocidade da página): leve, só transform */
+@keyframes pilha-parallax {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-20%);
+  }
+}

@@ -1,0 +1,148 @@
+/*
+ * Header "pílula de vidro" (S00) — receitas de motion do header
+ * Ficha: docs/sections/fichas/header.md (campos 4 e 7) · Catálogo: docs/jornada-e-motion.md §3.4 (header-pilula, header-logo,
+ * header-link, header-menu, painel, painel-fundo) · Variáveis: globals.css (--pilula-*, --gaveta-largura)
+ *
+ * EXCEÇÃO DOCUMENTADA (decisão do usuário, 16/11/2026: "navbar como a referência"): ao contrário do resto do site, o header
+ * pode (1) trocar de estado por um listener de scroll com histerese (HeaderBarra), (2) usar `backdrop-filter` e
+ * (3) animar padding, max-width, gap, cor, fundo e filtro. Por isso estas receitas vivem AQUI e não em globals.css
+ * (que segue valendo só transform/opacity, sem blur). Continua valendo: só `[data-anim]` como seletor, durações e curvas só
+ * dos tokens, reduced-motion = tokens ~0 (troca instantânea), nada fica escondido sem JS.
+ *
+ * Visual (17/11/2026): vidro CLARO (glassmorphism) — branco translúcido + desfoque + fio de luz + sombra; texto e logo ficam escuros/coloridos.
+ * Estado: `data-estado="rolado"` na raiz do header (escrito pelo HeaderBarra: liga > 60px, desliga ≤ 52px).
+ * O visual BASE aqui é o "rolado" (pílula): é o que aparece sem JS ou com falha (o header sticky nunca fica transparente sobre
+ * o conteúdo). O visual do topo (barra transparente) só vale com JS pronto E sem `rolado`.
+ *
+ * Níveis: N1 (microinteração de estado). Versões: desktop/tablet ≥768 e mobile <768 iguais (declaradas); reduced-motion = estado
+ * final instantâneo (os tokens de duração caem para ~0).
+ */
+
+/* ----- a pílula (header-pilula) ----- */
+[data-anim~="header-pilula"] {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-width: 0;
+  max-width: var(--pilula-largura);
+  padding: var(--space-1) var(--space-1) var(--space-1) var(--space-5);
+  gap: var(--space-8);
+  border-radius: var(--radius-full);
+  background-color: var(--pilula-vidro);
+  border: 1px solid var(--pilula-borda);
+  box-shadow: var(--shadow-2);
+  -webkit-backdrop-filter: blur(var(--space-5)) saturate(1.6);
+  backdrop-filter: blur(var(--space-5)) saturate(1.6);
+  transition:
+    max-width var(--dur-base) var(--ease-out),
+    padding var(--dur-base) var(--ease-out),
+    gap var(--dur-base) var(--ease-out),
+    background-color var(--dur-base) var(--ease-out),
+    border-color var(--dur-base) var(--ease-out),
+    box-shadow var(--dur-base) var(--ease-out),
+    backdrop-filter var(--dur-base) var(--ease-out),
+    -webkit-backdrop-filter var(--dur-base) var(--ease-out);
+}
+html[data-js]:not([data-js-falhou]) [data-section="header"]:not([data-estado="rolado"]) [data-anim~="header-pilula"] {
+  max-width: 100%;
+  padding: 0;
+  gap: 0;
+  background-color: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  -webkit-backdrop-filter: blur(0);
+  backdrop-filter: blur(0);
+}
+
+/* ----- o logo (header-logo): sempre colorido (o vidro é claro); só encolhe ao rolar ----- */
+[data-anim~="header-logo"] {
+  transform-origin: left center;
+  transform: scale(var(--logo-escala-rolado));
+  transition: transform var(--dur-base) var(--ease-out);
+}
+html[data-js]:not([data-js-falhou]) [data-section="header"]:not([data-estado="rolado"]) [data-anim~="header-logo"] {
+  transform: scale(1);
+}
+/* ≥1280: o logo fica no centro da pílula (posição por utilitários; aqui só o transform) */
+@media (min-width: 1280px) {
+  [data-anim~="header-logo"] {
+    transform-origin: center;
+    transform: translate(-50%, -50%) scale(var(--logo-escala-rolado));
+  }
+  html[data-js]:not([data-js-falhou]) [data-section="header"]:not([data-estado="rolado"]) [data-anim~="header-logo"] {
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* ----- links do menu (header-link) ----- */
+[data-anim~="header-link"] {
+  color: var(--color-text); /* texto escuro nos dois estados: o vidro é claro */
+  transition: opacity var(--dur-fast) var(--ease-out);
+}
+@media (hover: hover) {
+  [data-anim~="header-link"]:hover {
+    opacity: 0.6;
+  }
+}
+
+/* ----- botão do menu (header-menu): grade de pontos; círculo de vidro quando rolado ----- */
+[data-anim~="header-menu"] {
+  color: var(--color-text);
+  background-color: var(--pilula-vidro);
+  border: 1px solid var(--pilula-borda);
+  box-shadow: var(--shadow-2);
+  -webkit-backdrop-filter: blur(var(--space-5)) saturate(1.6);
+  backdrop-filter: blur(var(--space-5)) saturate(1.6);
+  transition:
+    background-color var(--dur-base) var(--ease-out),
+    border-color var(--dur-base) var(--ease-out),
+    box-shadow var(--dur-base) var(--ease-out),
+    backdrop-filter var(--dur-base) var(--ease-out),
+    -webkit-backdrop-filter var(--dur-base) var(--ease-out);
+}
+html[data-js]:not([data-js-falhou]) [data-section="header"]:not([data-estado="rolado"]) [data-anim~="header-menu"] {
+  background-color: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  -webkit-backdrop-filter: blur(0);
+  backdrop-filter: blur(0);
+}
+
+/* ----- gaveta (painel) e fundo escurecido (painel-fundo) ----- */
+[data-anim~="painel"] {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: var(--gaveta-largura);
+  max-width: 100%;
+  height: 100vh;
+  height: 100dvh;
+}
+/* Fechada = fora da tela e fora da ordem de Tab (visibility alterna depois da saída). */
+[data-anim~="painel"]:not([data-estado="aberto"]) {
+  transform: translateX(100%);
+  visibility: hidden;
+  transition:
+    transform var(--dur-base) var(--ease-out),
+    visibility 0s linear var(--dur-base);
+}
+[data-anim~="painel"][data-estado="aberto"] {
+  transform: translateX(0);
+  visibility: visible;
+  transition: transform var(--dur-base) var(--ease-out);
+}
+
+[data-anim~="painel-fundo"] {
+  position: fixed;
+  inset: 0;
+  background-color: var(--color-overlay);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-base) var(--ease-out);
+}
+[data-anim~="painel-fundo"][data-estado="aberto"] {
+  opacity: 1;
+  pointer-events: auto;
+}

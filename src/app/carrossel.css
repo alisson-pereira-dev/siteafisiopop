@@ -1,0 +1,122 @@
+/*
+ * Carrossel de depoimentos (S10) — receitas de motion do slide "sp2-testimonials2" enviado pelo usuário
+ * Ficha: docs/sections/fichas/depoimentos.md (revisão de 16/11/2026) · Catálogo: docs/jornada-e-motion.md §3.4 (carrossel-*)
+ *
+ * EXCEÇÃO DOCUMENTADA (decisão do usuário, 16/11/2026: "este é o slide"): como o header e o stage do S03, o carrossel pode
+ * (1) avançar sozinho por tempo (8 s, requestAnimationFrame em DepoimentosCarrossel), (2) animar o `flex-grow` do segmento ativo e
+ * a `width` do preenchimento de progresso e (3) mover a faixa por `transform` com loop infinito (3 cópias; o teleporte sem
+ * transição acontece em `transitionend`). O resto do site segue só transform/opacity.
+ * Mantido do projeto: seletor só por [data-anim]; durações e curvas só dos tokens; sem JS tudo visível (os depoimentos empilhados, sem
+ * barra); reduced-motion = SEM autoplay e troca instantânea (tokens ~0). Níveis: N1. Versões: ≥768 e <768 iguais (declaradas).
+ * A posição vem da variável --carrossel-pos (escrita pelo React): o deslocamento é em % da própria faixa, igual à largura de 1 slide.
+ */
+:root {
+  --carrossel-slide: 73.14%; /* largura de cada slide, medida na referência */
+  --carrossel-slide-mobile: 88%;
+  --carrossel-trilha: color-mix(in srgb, var(--color-bg-inverse) 20%, transparent);
+  --depoimentos-raio: 8px; /* cantos da foto do card (pedido do usuário, 17/11/2026) */
+  /* fundo de vidro fosco (glassmorphism) da seção: manchas de marca atrás + lâmina de vidro com desfoque por cima */
+  --vidro-secao-tinta: color-mix(in srgb, var(--color-surface) 55%, transparent);
+  --vidro-secao-borda: color-mix(in srgb, var(--color-surface) 80%, transparent);
+  --vidro-secao-mancha-rosa: color-mix(in srgb, var(--color-primary) 22%, var(--color-bg));
+  --vidro-secao-mancha-verde: color-mix(in srgb, var(--color-secondary) 30%, var(--color-bg));
+}
+
+/* ----- fundo da seção: manchas (bordas nítidas, que o vidro desfoca) + vidro; atrás do conteúdo (a seção é isolate) ----- */
+[data-anim~="carrossel-fundo"] {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background-color: var(--color-bg);
+  background-image:
+    radial-gradient(circle at 10% 22%, var(--vidro-secao-mancha-rosa) 0 9rem, transparent 9.05rem),
+    radial-gradient(circle at 90% 34%, var(--vidro-secao-mancha-verde) 0 11rem, transparent 11.05rem),
+    radial-gradient(circle at 52% 96%, var(--vidro-secao-mancha-rosa) 0 8rem, transparent 8.05rem);
+}
+[data-anim~="carrossel-vidro"] {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-color: var(--vidro-secao-tinta);
+  border-block: 1px solid var(--vidro-secao-borda);
+  -webkit-backdrop-filter: blur(var(--space-7)) saturate(1.4);
+  backdrop-filter: blur(var(--space-7)) saturate(1.4);
+}
+
+/* ----- arrastar: pegar e puxar a faixa (JS pronto); o deslocamento do dedo soma ao da posição, sem transição enquanto arrasta ----- */
+html[data-js]:not([data-js-falhou]) [data-anim~="carrossel-faixa"] {
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+}
+html[data-js]:not([data-js-falhou]) [data-anim~="carrossel-faixa"][data-estado="arrastando"] {
+  cursor: grabbing;
+  transition: none;
+}
+[data-anim~="carrossel-slide"] img {
+  -webkit-user-drag: none;
+}
+
+/* ----- faixa: sem JS, uma coluna com os depoimentos; com JS pronto, linha única deslocada por transform ----- */
+[data-anim~="carrossel-faixa"] {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+}
+html[data-js]:not([data-js-falhou]) [data-anim~="carrossel-faixa"] {
+  flex-direction: row;
+  gap: 0;
+  transform: translateX(calc(var(--carrossel-pos, 0) * var(--carrossel-slide-mobile) * -1 + var(--carrossel-arraste, 0px)));
+  transition: transform var(--dur-slower) var(--ease-in-out);
+}
+html[data-js]:not([data-js-falhou]) [data-anim~="carrossel-faixa"][data-estado="salto"] {
+  transition: none;
+}
+@media (min-width: 768px) {
+  html[data-js]:not([data-js-falhou]) [data-anim~="carrossel-faixa"] {
+    transform: translateX(calc(var(--carrossel-pos, 0) * var(--carrossel-slide) * -1 + var(--carrossel-arraste, 0px)));
+  }
+}
+
+/* ----- slide: o ativo em opacidade cheia, os vizinhos esmaecidos (só com JS) ----- */
+html[data-js]:not([data-js-falhou]) [data-anim~="carrossel-slide"] {
+  flex: none;
+  width: var(--carrossel-slide-mobile);
+  opacity: 0.5;
+  transition: opacity var(--dur-base) var(--ease-out);
+}
+@media (min-width: 768px) {
+  html[data-js]:not([data-js-falhou]) [data-anim~="carrossel-slide"] {
+    width: var(--carrossel-slide);
+  }
+}
+html[data-js]:not([data-js-falhou]) [data-anim~="carrossel-slide"][data-estado="ativa"] {
+  opacity: 1;
+}
+
+/* ----- navegação: barra segmentada + contador (só com JS) ----- */
+[data-anim~="carrossel-navegacao"] {
+  display: none;
+}
+html[data-js]:not([data-js-falhou]) [data-anim~="carrossel-navegacao"] {
+  display: flex;
+}
+[data-anim~="carrossel-segmento"] {
+  position: relative;
+  flex: 1 1 0;
+  height: var(--space-1); /* 4px, como a referência */
+  border-radius: var(--radius-full);
+  background-color: var(--carrossel-trilha);
+  overflow: hidden;
+  transition: flex-grow var(--dur-slower) var(--ease-in-out);
+}
+[data-anim~="carrossel-segmento"][data-estado="ativa"] {
+  flex-grow: 8;
+}
+[data-anim~="carrossel-progresso"] {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0;
+  background-color: var(--color-bg-inverse);
+}

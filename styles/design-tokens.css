@@ -1,0 +1,167 @@
+/* A.FISIO POP — design tokens v1.2 (gerado; não editar à mão). Fonte: design-tokens.json */
+:root {
+  /* Primitivas */
+  --pink-700: #B8104F;
+  --pink-600: #D6145F;
+  --pink-500: #E92E7A;
+  --pink-300: #FF6AA5;
+  --pink-100: #FFD6E8;
+  --pink-50: #FFF2F7;
+  --teal-800: #00665F;
+  --teal-700: #007E78;
+  --teal-500: #00B4AB;
+  --teal-400: #00E6D8;
+  --teal-100: #D6F5F2;
+  --ink: #1F1B22;
+  --graphite: #4A4450;
+  --slate: #6B6572;
+  --gray: #8A8490;
+  --line: #EEE8EE;
+  --white: #FFFFFF;
+  --paper: #FFFDFE;
+  --green-700: #0F7A57;
+  --green-50: #E3F6EE;
+  --amber-700: #9A5B00;
+  --amber-50: #FFF4DB;
+  --red-700: #B3261E;
+  --red-50: #FDECEA;
+  --whatsapp: #25D366;
+
+  /* Cores semânticas (usar SOMENTE estas nos componentes) */
+  --color-bg: #FFFDFE;
+  --color-bg-alt: #FFF2F7;
+  --color-bg-teal: #D6F5F2;
+  --color-bg-inverse: #1F1B22;
+  --color-surface: #FFFFFF;
+  --color-surface-raised: #FFFFFF;
+  --color-overlay: rgba(31, 27, 34, 0.56);
+  --color-text: #1F1B22;
+  --color-text-muted: #4A4450;
+  --color-text-subtle: #6B6572;
+  --color-text-inverse: #FFFFFF;
+  --color-text-inverse-muted: #D6F5F2;
+  --color-link: #D6145F;
+  --color-primary: #D6145F;
+  --color-primary-hover: #B8104F;
+  --color-primary-contrast: #FFFFFF;
+  --color-primary-soft: #FFD6E8;
+  --color-primary-bg: #FFF2F7;
+  --color-secondary: #007E78;
+  --color-secondary-hover: #00665F;
+  --color-secondary-contrast: #FFFFFF;
+  --color-secondary-soft: #D6F5F2;
+  --color-brand-pink: #E92E7A;
+  --color-brand-teal: #00B4AB;
+  --color-on-inverse-primary: #FF6AA5;
+  --color-on-inverse-accent: #00E6D8;
+  --color-border: #EEE8EE;
+  --color-border-strong: #8A8490;
+  --color-success: #0F7A57;
+  --color-success-bg: #E3F6EE;
+  --color-warning: #9A5B00;
+  --color-warning-bg: #FFF4DB;
+  --color-danger: #B3261E;
+  --color-danger-bg: #FDECEA;
+  --color-info: #007E78;
+  --color-focus-ring: #1F1B22;
+  --color-whatsapp: #25D366;
+  --color-whatsapp-contrast: #1F1B22;
+
+  /* Tipografia */
+  --font-title: 'Sora', system-ui, sans-serif;
+  --font-serif: 'Instrument Serif', Georgia, serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --text-display: clamp(2.5rem, 1.5rem + 5vw, 5.5rem);
+  --text-h1: clamp(2.25rem, 1.5rem + 3.5vw, 4rem);
+  --text-h2: clamp(1.75rem, 1.25rem + 2.2vw, 2.75rem);
+  --text-h3: clamp(1.25rem, 1.1rem + 0.8vw, 1.625rem);
+  --text-body-lg: clamp(1.125rem, 1.05rem + 0.3vw, 1.25rem);
+  --text-body: 1rem;
+  --text-small: 0.875rem;
+  --text-micro: 0.75rem;
+  --leading-title: 1.1;
+  --leading-body: 1.6;
+  --tracking-title: -0.02em;
+  --weight-title: 600;
+  --weight-body: 400;
+  --weight-strong: 600;
+
+  /* Espaço e layout */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+  --space-10: 8rem;
+  --container: 1200px;
+  --container-pad: 1rem;
+  --container-pad-lg: 2rem;
+  --space-section: clamp(4rem, 3rem + 5vw, 8rem);
+  --measure: 65ch;
+  --touch-target: 48px;
+  --header-height: 64px;
+
+  /* Forma, sombra, gradiente, proporção */
+  --radius-sm: 6px;
+  --radius-icon: 12px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-full: 999px;
+  --shadow-0: none;
+  --shadow-1: 0 1px 2px rgba(31, 27, 34, .06), 0 6px 20px rgba(31, 27, 34, .08);
+  --shadow-2: 0 2px 4px rgba(31, 27, 34, .06), 0 16px 36px rgba(214, 20, 95, .18);
+  --shadow-3: 0 4px 8px rgba(31, 27, 34, .08), 0 24px 48px rgba(31, 27, 34, .16);
+  --shadow-4: 0 8px 16px rgba(31, 27, 34, .12), 0 40px 80px rgba(31, 27, 34, .24);
+  --shadow-cta: 0 12px 28px rgba(214, 20, 95, .28);
+  --gradient-hero: linear-gradient(135deg, #E92E7A 0%, #00B4AB 100%);
+  --gradient-soft: linear-gradient(90deg, #FFD6E8 0%, #FFFFFF 50%, #D6F5F2 100%);
+  --gradient-price: linear-gradient(135deg, #D6145F 0%, #FF6AA5 100%);
+  --ratio-hero: 4 / 5;
+  --ratio-card: 4 / 3;
+  --ratio-square: 1 / 1;
+  --ratio-wide: 16 / 9;
+
+  /* Movimento */
+  --dur-instant: 100ms;
+  --dur-fast: 180ms;
+  --dur-base: 300ms;
+  --dur-slow: 500ms;
+  --dur-slower: 800ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --stagger-step: 60ms;
+  --reveal-distance: 24px;
+
+  /* Camadas */
+  --z-base: 0;
+  --z-sticky: 100;
+  --z-dropdown: 200;
+  --z-overlay: 300;
+  --z-modal: 400;
+  --z-toast: 500;
+}
+
+/* Breakpoints (mobile-first, min-width): 480 · 768 · 1024 · 1280 · 1536. Variáveis CSS não funcionam em @media; usar os valores no Tailwind/CSS. */
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --dur-fast: 0.01ms; --dur-base: 0.01ms; --dur-slow: 0.01ms; --dur-slower: 0.01ms; --reveal-distance: 0px; --stagger-step: 0ms; }
+}
+
+@media (min-width: 768px) { :root { --container-pad: var(--container-pad-lg); --header-height: 72px; } }
+
+/* Regras base */
+html { font-family: var(--font-body); color: var(--color-text); background: var(--color-bg); }
+h1, h2, h3 { font-family: var(--font-title); font-weight: var(--weight-title); letter-spacing: var(--tracking-title); line-height: var(--leading-title); }
+.accent-serif { font-family: var(--font-serif); font-style: italic; font-weight: 400; color: var(--color-brand-pink); letter-spacing: 0; }
+:focus-visible { outline: 3px solid var(--color-focus-ring); outline-offset: 3px; }
+.section-inverse :focus-visible { outline-color: var(--color-text-inverse); }
+.btn-primary { background: var(--color-primary); color: var(--color-primary-contrast); border-radius: var(--radius-full); min-height: var(--touch-target); padding: 0 var(--space-5); font: 600 1rem var(--font-body); box-shadow: var(--shadow-cta); transition: background var(--dur-fast) var(--ease-standard), transform var(--dur-fast) var(--ease-standard); }
+.btn-primary:hover { background: var(--color-primary-hover); }
+.btn-primary:active { transform: scale(.98); }
+.btn-whatsapp-float { background: var(--color-whatsapp); color: var(--color-whatsapp-contrast); width: 56px; height: 56px; border-radius: var(--radius-full); box-shadow: var(--shadow-3); }

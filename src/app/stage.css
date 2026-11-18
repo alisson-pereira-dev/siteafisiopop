@@ -1,0 +1,181 @@
+/*
+ * Stage do S03 · "Um problema, uma solução" — receitas de motion (slide "How it works / painel lateral" enviado pelo usuário)
+ * Ficha: docs/sections/fichas/problema-solucao.md (revisão de 16/11/2026) · Catálogo: docs/jornada-e-motion.md §3.4 (stage-*)
+ *
+ * EXCEÇÃO DOCUMENTADA (decisão do usuário, 16/11/2026: "este é o slide"): como o header, o stage pode (1) avançar sozinho por
+ * tempo (autoplay de 6 s, requestAnimationFrame, em ProblemaSolucaoStage), (2) animar `max-width`/`padding`/cor/fundo da pílula e
+ * `stroke-dashoffset` do anel de progresso e (3) usar `backdrop-filter` nos itens de FAQ. O resto do site segue só transform/opacity.
+ * Mantido do projeto: seletor só por [data-anim]; durações e curvas só dos tokens; sem JS tudo visível (as 5 cópias empilhadas, sem
+ * pílula); reduced-motion = SEM autoplay e troca instantânea (tokens ~0); a cópia inativa só some por \`opacity\` (nunca display:none
+ * nem visibility:hidden: o leitor de tela segue lendo; seus botões e links saem do Tab por tabIndex -1 e do clique por pointer-events).
+ * Níveis: N1. Versões: ≥768 e <768 iguais (declaradas). `stage-vidro` (≥768): vidro fosco (backdrop-filter) atrás do texto, sem véu branco.
+ */
+:root {
+  --stage-pilula: color-mix(in srgb, var(--color-surface) 80%, transparent);
+  --stage-vidro: color-mix(in srgb, var(--color-surface) 70%, transparent);
+  --stage-vidro-icone: color-mix(in srgb, var(--color-bg-inverse) 10%, transparent);
+  --stage-rotulo-max: 14rem;
+  --stage-vidro-desfoque: 28px; /* desfoque do vidro fosco atrás do texto */
+  --stage-vidro-tinta: color-mix(in srgb, var(--color-surface) 8%, transparent); /* quase transparente: só o desfoque aparece */
+}
+
+/* ----- pílula de passos (só com JS) ----- */
+[data-anim~="stage-passos"] {
+  display: none;
+}
+html[data-js]:not([data-js-falhou]) [data-anim~="stage-passos"] {
+  display: flex;
+}
+[data-anim~="stage-passo"] {
+  background-color: transparent;
+  transition:
+    background-color var(--dur-fast) var(--ease-out),
+    padding var(--dur-base) var(--ease-out);
+}
+[data-anim~="stage-passo"][data-estado="ativa"] {
+  background-color: var(--stage-pilula);
+  padding-right: var(--space-4);
+}
+[data-anim~="stage-passo-rotulo"] {
+  display: block;
+  max-width: 0;
+  margin-left: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  transition:
+    max-width var(--dur-base) var(--ease-out),
+    margin var(--dur-base) var(--ease-out);
+}
+[data-anim~="stage-passo"][data-estado="ativa"] [data-anim~="stage-passo-rotulo"] {
+  max-width: var(--stage-rotulo-max);
+  margin-left: var(--space-2);
+}
+
+/* ----- anel de progresso: o JS escreve stroke-dashoffset (68,487 = 2π · 10,9 → 0 em 6 s, linear) ----- */
+[data-anim~="stage-anel"] {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+[data-anim~="stage-anel"] circle {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+}
+[data-anim~="stage-anel"] circle:first-child {
+  stroke-opacity: 0.25;
+}
+[data-anim~="stage-anel-fill"] {
+  stroke-dasharray: 68.487;
+  stroke-dashoffset: 68.487;
+}
+
+/* ----- textos empilhados na mesma célula (com JS); sem JS, uma coluna com as 5 ----- */
+[data-anim~="stage-copias"] {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+}
+html[data-js]:not([data-js-falhou]) [data-anim~="stage-copias"] {
+  display: grid;
+}
+[data-anim~="stage-copia"] {
+  display: flex;
+  flex-direction: column;
+  transition: opacity var(--dur-base) var(--ease-out);
+}
+html[data-js]:not([data-js-falhou]) [data-anim~="stage-copia"] {
+  grid-area: 1 / 1;
+}
+html[data-js]:not([data-js-falhou]) [data-anim~="stage-copia"][data-estado="ativa"] {
+  transition-duration: var(--dur-slow);
+  transition-delay: var(--dur-instant);
+}
+html[data-js]:not([data-js-falhou]) [data-anim~="stage-copia"][data-estado="inativa"] {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ----- mídia de fundo: 5 camadas em crossfade (gradientes de marca enquanto não há foto) ----- */
+[data-anim~="stage-visual"] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity var(--dur-slower) var(--ease-out);
+}
+[data-anim~="stage-visual"][data-estado="ativa"] {
+  opacity: 1;
+}
+[data-anim~="stage-visual"]:nth-child(1) {
+  background-image: linear-gradient(135deg, var(--color-primary-soft), var(--color-bg));
+}
+[data-anim~="stage-visual"]:nth-child(2) {
+  background-image: linear-gradient(135deg, var(--color-secondary-soft), var(--color-bg));
+}
+[data-anim~="stage-visual"]:nth-child(3) {
+  background-image: linear-gradient(225deg, var(--color-primary-soft), var(--color-secondary-soft));
+}
+[data-anim~="stage-visual"]:nth-child(4) {
+  background-image: linear-gradient(45deg, var(--color-secondary-soft), var(--color-primary-soft));
+}
+[data-anim~="stage-visual"]:nth-child(5) {
+  background-image: linear-gradient(315deg, var(--color-primary-soft), var(--color-bg-teal));
+}
+
+/* ----- vidro fosco sobre a mídia, atrás do texto (glassmorphism): só DESFOQUE, sem véu branco ----- */
+[data-anim~="stage-vidro"] {
+  -webkit-backdrop-filter: blur(var(--stage-vidro-desfoque)) saturate(1.1);
+  backdrop-filter: blur(var(--stage-vidro-desfoque)) saturate(1.1);
+  background-color: var(--stage-vidro-tinta);
+  /* a borda direita dissolve: o desfoque some aos poucos e o vídeo volta nítido */
+  -webkit-mask-image: linear-gradient(90deg, black 0%, black 65%, transparent 100%);
+  mask-image: linear-gradient(90deg, black 0%, black 65%, transparent 100%);
+}
+
+/* ----- tom escuro (≥768): mídia escura → texto claro e vidro escuro. O painel redefine as variáveis de cor (text-foreground, text-muted e bg-surface
+   passam a ser claro/escuro translúcido) e a tinta do vidro; nenhum componente muda de classe. ----- */
+/* só ≥768: abaixo disso a mídia é uma faixa separada e o texto fica sobre fundo claro */
+@media (min-width: 768px) {
+  [data-anim~="stage-raiz"][data-tom="escuro"] [data-anim~="stage-lateral"] {
+    --color-text: var(--color-text-inverse);
+    --color-text-muted: var(--color-text-inverse-muted);
+    --color-surface: color-mix(in srgb, var(--color-bg-inverse) 45%, transparent);
+    --stage-pilula: color-mix(in srgb, var(--color-bg-inverse) 55%, transparent);
+    --stage-vidro: color-mix(in srgb, var(--color-bg-inverse) 45%, transparent);
+    --stage-vidro-icone: color-mix(in srgb, var(--color-text-inverse) 15%, transparent);
+    --color-secondary-soft: var(--stage-vidro-icone); /* caixa do ícone do serviço: translúcida (o branco sobre o verde-claro não tinha contraste) */
+  }
+  [data-anim~="stage-raiz"][data-tom="escuro"] [data-anim~="stage-vidro"] {
+    background-color: color-mix(in srgb, var(--color-bg-inverse) 30%, transparent);
+  }
+}
+
+/* ----- itens de FAQ "vidro" ----- */
+[data-anim~="stage-faq"] {
+  background-color: var(--stage-vidro);
+  -webkit-backdrop-filter: blur(var(--space-5));
+  backdrop-filter: blur(var(--space-5));
+}
+[data-anim~="stage-faq-icone"] {
+  background-color: var(--stage-vidro-icone);
+}
+
+/* ----- modal de pergunta (<dialog> nativo: foco preso, Esc e inert de graça) ----- */
+[data-anim~="stage-modal"]::backdrop {
+  background-color: var(--color-overlay);
+}
+[data-anim~="stage-modal"][open] {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity var(--dur-base) var(--ease-out),
+    transform var(--dur-base) var(--ease-out);
+}
+@starting-style {
+  [data-anim~="stage-modal"][open] {
+    opacity: 0;
+    transform: translateY(var(--space-5));
+  }
+}

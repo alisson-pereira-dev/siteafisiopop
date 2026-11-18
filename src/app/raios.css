@@ -1,0 +1,8 @@
+/*
+ * Raios de cantos extras (valores pedidos pelo usuário que não existem na escala do design-tokens.css, que não se edita)
+ * --raio-cartao: 8px (18/11/2026, "8px é o suficiente"): cards e fotos dos endereços (S17). Uso: `rounded-[var(--raio-cartao)]`.
+ * (O carrossel de depoimentos tem o seu, --depoimentos-raio, em carrossel.css.)
+ */
+:root {
+  --raio-cartao: 8px;
+}

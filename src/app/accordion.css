@@ -1,0 +1,59 @@
+/*
+ * Dúvidas frequentes (UiAccordion) — abrir e fechar SUAVE
+ * Ficha: docs/sections/fichas/preco-pop.md (revisão de 18/11/2026) · Componente: src/ui/UiAccordion.tsx · Catálogo: docs/jornada-e-motion.md §3.4 (accordion, accordion-icone, accordion-resposta)
+ *
+ * EXCEÇÃO DOCUMENTADA (decisão do usuário, 18/11/2026: "a animação está muito seca"): a regra "altura não anima" deixa de valer SÓ para o accordion.
+ * Em navegadores com ::details-content + interpolate-size (Chromium 131+), a altura (block-size) abre e FECHA animada; nos demais, o <details> segue
+ * abrindo na hora (degrada sem perder nada). Para todos: a resposta entra com opacity + translateY (só transform/opacity, dentro da regra geral)
+ * e o ícone "+" gira com curva suave. Nada depende de JS e nada fica escondido (sem JS o <details> nativo funciona igual).
+ * Nível N1. Versões: desktop/tablet ≥768 dur-slow; mobile <768 dur-base; reduced-motion: instantâneo (os tokens de duração caem para ~0).
+ * Seletor só por [data-anim]; durações e curvas só dos tokens.
+ */
+@supports (interpolate-size: allow-keywords) {
+  :root {
+    interpolate-size: allow-keywords;
+  }
+  [data-anim~="accordion"]::details-content {
+    block-size: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition:
+      block-size var(--dur-base) var(--ease-in-out),
+      opacity var(--dur-base) var(--ease-in-out),
+      content-visibility var(--dur-base) allow-discrete;
+  }
+  [data-anim~="accordion"][open]::details-content {
+    block-size: auto;
+    opacity: 1;
+  }
+  @media (min-width: 768px) {
+    [data-anim~="accordion"]::details-content {
+      transition-duration: var(--dur-slow);
+    }
+  }
+}
+
+/* o ícone gira mais devagar e com a curva suave (antes: dur-fast) */
+[data-anim~="accordion-icone"] {
+  transition: transform var(--dur-base) var(--ease-out);
+}
+
+/* a resposta sobe 0,5rem enquanto aparece (substitui o fade seco de globals.css) */
+details[open] > [data-anim~="accordion-resposta"] {
+  animation: accordion-entrada var(--dur-base) var(--ease-out) both;
+}
+@media (min-width: 768px) {
+  details[open] > [data-anim~="accordion-resposta"] {
+    animation-duration: var(--dur-slow);
+  }
+}
+@keyframes accordion-entrada {
+  from {
+    opacity: 0;
+    transform: translateY(calc(var(--space-2) * -1));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
