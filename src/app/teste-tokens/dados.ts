@@ -23,7 +23,14 @@ export function lerTokens(css: string): Record<string, string> {
 }
 
 export const CAMINHO_TOKENS = join(process.cwd(), "styles", "design-tokens.css");
-export const tokens = lerTokens(readFileSync(CAMINHO_TOKENS, "utf8"));
+// Em produção a página responde 404 e, no Cloudflare Workers, não há disco: sem o arquivo o módulo carrega vazio (não derruba a rota).
+export const tokens = (() => {
+  try {
+    return lerTokens(readFileSync(CAMINHO_TOKENS, "utf8"));
+  } catch {
+    return {} as Record<string, string>;
+  }
+})();
 
 /* ---------------------------------------------------------------- contraste */
 
