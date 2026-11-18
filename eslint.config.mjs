@@ -25,6 +25,8 @@ const eslintConfig = defineConfig([
   globalIgnores([
     // Default ignores of eslint-config-next:
     ".next/**",
+    ".open-next/**", // saída gerada do OpenNext (Cloudflare)
+    ".wrangler/**",
     "out/**",
     "build/**",
     "next-env.d.ts",
