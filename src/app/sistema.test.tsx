@@ -8,7 +8,7 @@ import path from "node:path";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { conteudo } from "@/lib/conteudo";
 import { jsonLd, schemaLocalBusiness } from "@/lib/schema";
-import { urlDoSite } from "@/lib/site-url";
+import { modoAmostra, urlDoSite } from "@/lib/site-url";
 import { Footer } from "@/secoes/footer/Footer";
 import { contar, renderizar, tagsCom, valorDe } from "@/test/render";
 import NotFound from "./not-found";
@@ -151,6 +151,17 @@ describe("T5.4 · SEO", () => {
     vi.stubEnv("SITE_URL", "https://exemplo.com");
     expect(robots().sitemap).toBe("https://exemplo.com/sitemap.xml");
     expect(sitemap()).toEqual([{ url: "https://exemplo.com/" }]);
+  });
+
+  it("modo AMOSTRA (SITE_AMOSTRA=1): robots.txt bloqueia tudo e o layout pede noindex; desligado por padrão", () => {
+    vi.stubEnv("SITE_AMOSTRA", "1");
+    expect(robots()).toEqual({ rules: { userAgent: "*", disallow: "/" } });
+    expect(modoAmostra("1")).toBe(true);
+    expect(modoAmostra("true")).toBe(true);
+    expect(modoAmostra("")).toBe(false);
+    expect(fonte("src/app/layout.tsx")).toMatch(/modoAmostra\(\) \? \{ robots: \{ index: false, follow: false \} \}/);
+    vi.stubEnv("SITE_AMOSTRA", "");
+    expect(robots().rules).toEqual({ userAgent: "*", allow: "/" });
   });
 
   it("robots não bloqueia /privacidade nem /termos (o robô precisa ler o noindex)", () => {

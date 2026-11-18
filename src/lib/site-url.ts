@@ -14,3 +14,13 @@ export function urlDoSite(bruto: string | undefined = process.env.SITE_URL): URL
     return undefined;
   }
 }
+
+/**
+ * Modo AMOSTRA (publicação de teste, ex.: Cloudflare): com `SITE_AMOSTRA=1` o site pede aos buscadores para NÃO indexar nem seguir
+ * (meta robots + robots.txt com disallow). Existe porque a amostra traz depoimentos fictícios e dados ainda `validar`.
+ * Desligado por padrão; no lançamento, não definir a variável.
+ */
+export function modoAmostra(bruto: string | undefined = process.env.SITE_AMOSTRA): boolean {
+  const v = bruto?.trim().toLowerCase();
+  return v === "1" || v === "true" || v === "sim";
+}

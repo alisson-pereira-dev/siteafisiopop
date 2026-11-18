@@ -18,7 +18,7 @@ import "./pilha.css";
 import "./accordion.css";
 import "./raios.css";
 import { conteudo as content } from "@/lib/conteudo";
-import { urlDoSite } from "@/lib/site-url";
+import { modoAmostra, urlDoSite } from "@/lib/site-url";
 import { Footer } from "@/secoes/footer/Footer";
 import { Header } from "@/secoes/header/Header";
 import { CtaObservador } from "@/ui/CtaObservador";
@@ -57,6 +57,7 @@ const { og_imagem: ogImagem } = content.seo.home;
 export const metadata: Metadata = {
   title: content.seo.home.titulo,
   description: content.seo.home.descricao,
+  ...(modoAmostra() ? { robots: { index: false, follow: false } } : {}),
   ...(baseDoSite ? { metadataBase: baseDoSite, alternates: { canonical: "/" } } : {}),
   openGraph: {
     type: "website",
